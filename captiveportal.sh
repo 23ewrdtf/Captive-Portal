@@ -127,6 +127,9 @@ chmod 755 /usr/share/nginx/html/portal
 echo "----------------------Copying hotspot.conf
 wget -q https://raw.githubusercontent.com/tretos53/Captive-Portal/master/nginx -O /etc/nginx/sites-available/hotspot.conf
 
+echo "----------------------Copying index.html
+wget -q https://raw.githubusercontent.com/tretos53/Captive-Portal/master/index.html -O /usr/share/nginx/html/portal/index.html
+
 
 echo "----------------------Enabling the website and reload nginx
 ln -s /etc/nginx/sites-available/hotspot.conf /etc/nginx/sites-enabled/hotspot.conf
