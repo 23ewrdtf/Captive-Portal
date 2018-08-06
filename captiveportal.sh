@@ -135,4 +135,4 @@ echo "----------------------Enabling the website and reload nginx
 ln -s /etc/nginx/sites-available/hotspot.conf /etc/nginx/sites-enabled/hotspot.conf
 systemctl reload nginx
 
-echo "----------------------Done, please reboot.
+echo "----------------------Done, connect to the wifi and test.
