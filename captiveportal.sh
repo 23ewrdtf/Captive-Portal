@@ -151,6 +151,7 @@ echo "┌───────────────────────�
 echo "|Making the HTML Document Root.|"
 echo "└──────────────────────────────┘"
 mkdir /usr/share/nginx/html/portal
+useradd nginx
 chown nginx:www-data /usr/share/nginx/html/portal
 chmod 755 /usr/share/nginx/html/portal
 
