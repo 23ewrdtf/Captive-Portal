@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# From https://gist.github.com/Lewiscowles1986/fecd4de0b45b2029c390
+# From https://gist.github.com/Lewiscowles1986/fecd4de0b45b2029c390 and other places
 
 if [ "$EUID" -ne 0 ]
 	then echo "Must be root"
