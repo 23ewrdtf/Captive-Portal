@@ -7,51 +7,83 @@ if [ "$EUID" -ne 0 ]
 	exit
 fi
 
-# echo "----------------------Updating repositories----------------------"
+# echo "┌─────────────────────┐"
+# echo "|Updating repositories|"
+# echo "└─────────────────────┘"
 # apt-get update -yqq
 
-# echo "----------------------Upgrading packages, this might take a while----------------------"
+# echo "┌───────────────────────────────────────────┐"
+# echo "|Upgrading packages, this might take a while|"
+# echo "└───────────────────────────────────────────┘"
 # apt-get upgrade -yqq
 
-echo "----------------------Installing iptables-persistent"
+echo "┌──────────────────────────────┐"
+echo "|Installing iptables-persistent|"
+echo "└──────────────────────────────┘"
 apt-get install iptables-persistent -yqq
 
-echo "----------------------Installing conntrack"
+echo "┌────────────────────┐"
+echo "|Installing conntrack|"
+echo "└────────────────────┘"
 apt-get install conntrack -yqq
 
-echo "----------------------Installing dnsmasq"
+echo "┌──────────────────┐"
+echo "|Installing dnsmasq|"
+echo "└──────────────────┘"
 apt-get install dnsmasq -yqq
 
-echo "----------------------Installing nginx"
+echo "┌────────────────┐"
+echo "|Installing nginx|"
+echo "└────────────────┘"
 apt-get install nginx -yqq
 
-echo "----------------------Installing hostapd"
+echo "┌──────────────────┐"
+echo "|Installing hostapd|"
+echo "└──────────────────┘"
 apt-get install hostapd -yqq
 
-echo "----------------------Copying dnsmasq.conf"
+echo "┌────────────────────┐"
+echo "|Copying dnsmasq.conf|"
+echo "└────────────────────┘"
 wget -q https://raw.githubusercontent.com/tretos53/Captive-Portal/master/dnsmasq.conf -O /etc/dnsmasq.conf
 
-echo "----------------------Copying hosts"
+echo "┌──────────────────┐"
+echo "|Copying hosts file|"
+echo "└──────────────────┘"
 wget -q https://raw.githubusercontent.com/tretos53/Captive-Portal/master/hosts -O /etc/hosts
 
-echo "----------------------Copying interfaces"
+echo "┌───────────────────────┐"
+echo "|Copying interfaces file|"
+echo "└───────────────────────┘"
 wget -q https://github.com/tretos53/Captive-Portal/blob/master/interfaces -O /etc/network/interfaces
 
-echo "----------------------Copying hostapd.conf
+echo "┌────────────────────┐"
+echo "|Copying hostapd.conf|
+echo "└────────────────────┘"
 wget -q https://raw.githubusercontent.com/tretos53/Captive-Portal/master/hostapd.conf -O /etc/hostapd/hostapd.conf
 
-echo "----------------------Configuring DAEMON
+echo "┌──────────────────┐"
+echo "|Configuring DAEMON|
+echo "└──────────────────┘"
 sed -i -- 's/#DAEMON_CONF=""/DAEMON_CONF="\/etc\/hostapd\/hostapd.conf"/g' /etc/default/hostapd
 
-echo "----------------------Configuring IP Tables
+echo "┌─────────────────────┐"
+echo "|Configuring IP Tables|
+echo "└─────────────────────┘"
 
-echo "----------------------Flushing all connections in the firewall
+echo "┌────────────────────────────────────────┐"
+echo "|Flushing all connections in the firewall|"
+echo "└────────────────────────────────────────┘"
 iptables -F
 
-echo "----------------------Deleting all chains in iptables
+echo "┌───────────────────────────────┐"
+echo "|Deleting all chains in iptables|"
+echo "└───────────────────────────────┘"
 iptables -X
 
-echo "----------------------Setting up rules
+echo "┌────────────────┐"
+echo "|Setting up rules|"
+echo "└────────────────┘"
 iptables -t mangle -N wlan0_Trusted
 iptables -t mangle -N wlan0_Outgoing
 iptables -t mangle -N wlan0_Incoming
@@ -75,7 +107,9 @@ iptables -t nat -A wlan0_Unknown -j wlan0_AuthServers
 iptables -t nat -A wlan0_Unknown -j wlan0_Global
 iptables -t nat -A wlan0_Unknown -j wlan0_temp
 
-echo "----------------------Forwarding new requests to this destination
+echo "┌───────────────────────────────────────────┐"
+echo "|Forwarding new requests to this destination|"
+echo "└───────────────────────────────────────────┘"
 iptables -t nat -A wlan0_Unknown -p tcp --dport 80 -j DNAT --to-destination 192.168.24.1
 iptables -t filter -N wlan0_Internet
 iptables -t filter -N wlan0_AuthServers
@@ -90,35 +124,50 @@ iptables -t filter -A wlan0_Internet -j wlan0_AuthServers
 iptables -t filter -A wlan0_AuthServers -d 192.168.24.1 -j ACCEPT
 iptables -t filter -A wlan0_Internet -j wlan0_Global
 
-echo "----------------------Allowing unrestricted access to packets marked with 0x2
+echo "┌───────────────────────────────────────────────────────┐"
+echo "|Allowing unrestricted access to packets marked with 0x2|"
+echo "└───────────────────────────────────────────────────────┘"
 iptables -t filter -A wlan0_Internet -m mark --mark 0x2 -j wlan0_Known
 iptables -t filter -A wlan0_Known -d 0.0.0.0/0 -j ACCEPT
 iptables -t filter -A wlan0_Internet -j wlan0_Unknown
 
-echo "----------------------Allowing access to DNS and DHCP. This helps power users who have set their own DNS servers
+echo "┌───────────────────────────────────────────────────────────────────────────────────────────┐"
+echo "|Allowing access to DNS and DHCP. This helps power users who have set their own DNS servers.|"
+echo "└───────────────────────────────────────────────────────────────────────────────────────────┘"
 iptables -t filter -A wlan0_Unknown -d 0.0.0.0/0 -p udp --dport 53 -j ACCEPT
 iptables -t filter -A wlan0_Unknown -d 0.0.0.0/0 -p tcp --dport 53 -j ACCEPT
 iptables -t filter -A wlan0_Unknown -d 0.0.0.0/0 -p udp --dport 67 -j ACCEPT
 iptables -t filter -A wlan0_Unknown -d 0.0.0.0/0 -p tcp --dport 67 -j ACCEPT
 iptables -t filter -A wlan0_Unknown -j REJECT --reject-with icmp-port-unreachable
 
-echo "----------------------Saving iptables
+echo "┌────────────────┐"
+echo "|Saving iptables.|"
+echo "└────────────────┘"
 iptables-save > /etc/iptables/rules.v4
 
-echo "----------------------Making the HTML Document Root
+echo "┌──────────────────────────────┐"
+echo "|Making the HTML Document Root.|"
+echo "└──────────────────────────────┘"
 mkdir /usr/share/nginx/html/portal
 chown nginx:www-data /usr/share/nginx/html/portal
 chmod 755 /usr/share/nginx/html/portal
 
-echo "----------------------Copying hotspot.conf
+echo "┌────────────────────┐"
+echo "|Copying hotspot.conf|"
+echo "└────────────────────┘"
 wget -q https://raw.githubusercontent.com/tretos53/Captive-Portal/master/nginx -O /etc/nginx/sites-available/hotspot.conf
 
-echo "----------------------Copying index.html
+echo "┌──────────────────┐"
+echo "|Copying index.html|"
+echo "└──────────────────┘"
 wget -q https://raw.githubusercontent.com/tretos53/Captive-Portal/master/index.html -O /usr/share/nginx/html/portal/index.html
 
-
-echo "----------------------Enabling the website and reload nginx
+echo "┌─────────────────────────────────────┐"
+echo "|Enabling the website and reload nginx|"
+echo "└─────────────────────────────────────┘"
 ln -s /etc/nginx/sites-available/hotspot.conf /etc/nginx/sites-enabled/hotspot.conf
 systemctl reload nginx
 
-echo "----------------------Done, connect to the wifi and test.
+echo "┌───────────────────────────────────┐"
+echo "|Done, connect to the wifi and test.|"
+echo "└───────────────────────────────────┘"
