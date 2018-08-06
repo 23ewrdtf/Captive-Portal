@@ -58,17 +58,17 @@ echo "└───────────────────────�
 wget -q https://github.com/tretos53/Captive-Portal/blob/master/interfaces -O /etc/network/interfaces
 
 echo "┌────────────────────┐"
-echo "|Copying hostapd.conf|
+echo "|Copying hostapd.conf|"
 echo "└────────────────────┘"
 wget -q https://raw.githubusercontent.com/tretos53/Captive-Portal/master/hostapd.conf -O /etc/hostapd/hostapd.conf
 
 echo "┌──────────────────┐"
-echo "|Configuring DAEMON|
+echo "|Configuring DAEMON|"
 echo "└──────────────────┘"
 sed -i -- 's/#DAEMON_CONF=""/DAEMON_CONF="\/etc\/hostapd\/hostapd.conf"/g' /etc/default/hostapd
 
 echo "┌─────────────────────┐"
-echo "|Configuring IP Tables|
+echo "|Configuring IP Tables|"
 echo "└─────────────────────┘"
 
 echo "┌────────────────────────────────────────┐"
