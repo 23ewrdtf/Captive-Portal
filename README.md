@@ -14,6 +14,8 @@ Connect to the SSH and run below command. You can get the IP address from IP sca
 
 NOT TESTED
 
+https://gist.github.com/mpeven/e6a3d762737071bf54cf7c51c92fca43
+
 ```
 sudo -i
 ```
