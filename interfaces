@@ -2,10 +2,10 @@
 auto lo eth0
 iface lo inet loopback
 
-# The "wan" network interface
+# The "lan" network interface
 iface eth0 inet dhcp
 
-# The "lan" network interface
+# The "wifi" network interface
 iface wlan0 inet static
 address 192.168.24.1
 netmask 255.255.255.0
