@@ -15,5 +15,9 @@ Connect to the SSH and run below command. You can get the IP address from IP sca
 NOT TESTED
 
 ```
+sudo -i
+```
+
+```
 curl -sSL https://raw.githubusercontent.com/tretos53/Captive-Portal/master/captiveportal.sh | sudo bash $0
 ```
