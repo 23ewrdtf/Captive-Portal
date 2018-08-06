@@ -1,6 +1,6 @@
 ## Raspberry-Pie
 
-### Setting up a simple Captive Portal
+### This will create an open wifi network and when you connect to it, it will automatically open the browser. No internet access.
 
 Tested on without updating the system first 2018-06-27-raspbian-stretch.zip
 
