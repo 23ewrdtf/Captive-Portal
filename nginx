@@ -1,0 +1,58 @@
+# Make the HTML Document Root
+mkdir /usr/share/nginx/html/portal
+chown nginx:www-data /usr/share/nginx/html/portal
+chmod 755 /usr/share/nginx/html/portal
+
+# create the nginx hotspot.conf file
+cat << EOF > /etc/nginx/sites-available/hotspot.conf
+server {
+    # Listening on IP Address.
+    # This is the website iptables redirects to
+    listen       80 default_server;
+    root         /usr/share/nginx/html/portal;
+
+    # For iOS
+    if ($http_user_agent ~* (CaptiveNetworkSupport) ) {
+        return 302 http://hotspot.localnet/hotspot.html;
+    }
+
+    # For others
+    location / {
+        return 302 http://hotspot.localnet/;
+    }
+ }
+
+ upstream php {
+    #this should match value of "listen" directive in php-fpm pool
+		server unix:/tmp/php-fpm.sock;
+		server 127.0.0.1:9000;
+	}
+
+server {
+     listen       80;
+     server_name  hotspot.localnet;
+     root         /usr/share/nginx/html/portal;
+
+     location / {
+         try_files $uri $uri/ index.php;
+     }
+
+    # Pass all .php files onto a php-fpm/php-fcgi server.
+    location ~ [^/]\.php(/|$) {
+    	fastcgi_split_path_info ^(.+?\.php)(/.*)$;
+    	if (!-f $document_root$fastcgi_script_name) {
+    		return 404;
+    	}
+    	# This is a robust solution for path info security issue and works with "cgi.fix_pathinfo = 1" in /etc/php.ini (default)
+    	include fastcgi_params;
+    	fastcgi_index index.php;
+    	fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+    	fastcgi_pass php;
+    }
+}
+
+EOF
+
+# Enable the website and reload nginx
+ln -s /etc/nginx/sites-available/hotspot.conf /etc/nginx/sites-enabled/hotspot.conf
+systemctl reload nginx
