@@ -7,20 +7,6 @@ if [ "$EUID" -ne 0 ]
 	exit
 fi
 
-if [[ $# -lt 1 ]]; 
-	then echo "You need to pass a password!"
-	echo "Usage:"
-	echo "sudo $0 yourChosenPassword [apName]"
-	exit
-fi
-
-APPASS="$1"
-APSSID="rPi3"
-
-if [[ $# -eq 2 ]]; then
-	APSSID=$2
-fi
-
 # echo "----------------------Updating repositories----------------------"
 # apt-get update -yqq
 
