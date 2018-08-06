@@ -21,111 +21,114 @@ if [[ $# -eq 2 ]]; then
 	APSSID=$2
 fi
 
-# echo "----------------------Removing old hostapd----------------------"
-
-# apt-get remove --purge hostapd -yqq
-
 # echo "----------------------Updating repositories----------------------"
-
 # apt-get update -yqq
 
 # echo "----------------------Upgrading packages, this might take a while----------------------"
-
 # apt-get upgrade -yqq
 
-echo "----------------------Installing hostapd----------------------"
 
-apt-get install hostapd -yqq
+echo "----------------------Installing iptables-persistent"
+apt-get install iptables-persistent -yqq
 
-echo "----------------------Installing dnsmasq----------------------"
+echo "----------------------Installing conntrack"
+apt-get install conntrack -yqq
 
+echo "----------------------Installing dnsmasq"
 apt-get install dnsmasq -yqq
 
-echo "----------------------Installing lighttpd----------------------"
+echo "----------------------Installing nginx"
+apt-get install nginx -yqq
 
-apt-get install lighttpd -yqq
+echo "----------------------Installing hostapd"
+apt-get install hostapd -yqq
 
-echo "----------------------Writing to dnsmasq.conf----------------------"
+echo "----------------------Copying dnsmasq.conf"
+wget -q https://raw.githubusercontent.com/tretos53/Captive-Portal/master/dnsmasq.conf -O /etc/dnsmasq.conf
 
-cat > /etc/dnsmasq.conf <<EOF
-bogus-priv
-server=/localnet/10.0.0.1
-local=/localnet/
-domain=localnet
-dhcp-option=3,10.0.0.1
-dhcp-option=6,10.0.0.1
-dhcp-authoritative
-interface=wlan0
-dhcp-range=10.0.0.2,10.0.0.5,255.255.255.0,12h
-address=/#/10.0.0.1
-EOF
+echo "----------------------Copying hosts"
+wget -q https://raw.githubusercontent.com/tretos53/Captive-Portal/master/hosts -O /etc/hosts
 
-echo "----------------------Writing to hosts----------------------"
+echo "----------------------Copying interfaces"
+wget -q https://github.com/tretos53/Captive-Portal/blob/master/interfaces -O /etc/network/interfaces
 
-cat > /etc/dnsmasq.conf <<EOF
-127.0.0.1	localhost 
-10.0.0.1	hotspot.localnet
-EOF
+echo "----------------------Copying hostapd.conf
+wget -q https://raw.githubusercontent.com/tretos53/Captive-Portal/master/hostapd.conf -O /etc/hostapd/hostapd.conf
 
-echo "----------------------Writing to resolv.conf----------------------"
-
-cat > /run/dnsmasq/resolv.conf <<EOF
-nameserver 10.0.0.1
-EOF
-
-
-echo "----------------------Writing to hostapd.conf----------------------"
-
-cat > /etc/hostapd/hostapd.conf <<EOF
-interface=wlan0
-hw_mode=g
-channel=10
-auth_algs=1
-ssid=$APSSID
-ieee80211n=1
-wmm_enabled=1
-ht_capab=[HT40][SHORT-GI-20][DSSS_CCK-40]
-EOF
-
-echo "----------------------Configuring interfaces----------------------"
-
-sed -i -- 's/allow-hotplug wlan0//g' /etc/network/interfaces
-sed -i -- 's/iface wlan0 inet manual//g' /etc/network/interfaces
-sed -i -- 's/    wpa-conf \/etc\/wpa_supplicant\/wpa_supplicant.conf//g' /etc/network/interfaces
+echo "----------------------Configuring DAEMON
 sed -i -- 's/#DAEMON_CONF=""/DAEMON_CONF="\/etc\/hostapd\/hostapd.conf"/g' /etc/default/hostapd
 
-cat >> /etc/network/interfaces <<EOF
-# Added by rPi Access Point Setup
-allow-hotplug wlan0
-iface wlan0 inet static
-	address 10.0.0.1
-	netmask 255.255.255.0
-	network 10.0.0.0
-	broadcast 10.0.0.255
-auto eth0
-	allow-hotplug eth0
-	iface eth0 inet dhcp
-EOF
+echo "----------------------Configuring IP Tables
 
-echo "denyinterfaces wlan0" >> /etc/dhcpcd.conf
+echo "Flush all connections in the firewall
+iptables -F
 
-echo "----------------------Starting up services and configuring to start at boot----------------------"
+echo "Delete all chains in iptables
+iptables -X
 
-systemctl enable hostapd
-systemctl enable dnsmasq
+echo "Setting up rules
+iptables -t mangle -N wlan0_Trusted
+iptables -t mangle -N wlan0_Outgoing
+iptables -t mangle -N wlan0_Incoming
+iptables -t mangle -I PREROUTING 1 -i wlan0 -j wlan0_Outgoing
+iptables -t mangle -I PREROUTING 1 -i wlan0 -j wlan0_Trusted
+iptables -t mangle -I POSTROUTING 1 -o wlan0 -j wlan0_Incoming
+iptables -t nat -N wlan0_Outgoing
+iptables -t nat -N wlan0_Router
+iptables -t nat -N wlan0_Internet
+iptables -t nat -N wlan0_Global
+iptables -t nat -N wlan0_Unknown
+iptables -t nat -N wlan0_AuthServers
+iptables -t nat -N wlan0_temp
+iptables -t nat -A PREROUTING -i wlan0 -j wlan0_Outgoing
+iptables -t nat -A wlan0_Outgoing -d 192.168.24.1 -j wlan0_Router
+iptables -t nat -A wlan0_Router -j ACCEPT
+iptables -t nat -A wlan0_Outgoing -j wlan0_Internet
+iptables -t nat -A wlan0_Internet -m mark --mark 0x2 -j ACCEPT
+iptables -t nat -A wlan0_Internet -j wlan0_Unknown
+iptables -t nat -A wlan0_Unknown -j wlan0_AuthServers
+iptables -t nat -A wlan0_Unknown -j wlan0_Global
+iptables -t nat -A wlan0_Unknown -j wlan0_temp
 
-service hostapd start
-service dnsmasq start
+echo "Forward new requests to this destination
+iptables -t nat -A wlan0_Unknown -p tcp --dport 80 -j DNAT --to-destination 192.168.24.1
+iptables -t filter -N wlan0_Internet
+iptables -t filter -N wlan0_AuthServers
+iptables -t filter -N wlan0_Global
+iptables -t filter -N wlan0_temp
+iptables -t filter -N wlan0_Known
+iptables -t filter -N wlan0_Unknown
+iptables -t filter -I FORWARD -i wlan0 -j wlan0_Internet
+iptables -t filter -A wlan0_Internet -m state --state INVALID -j DROP
+iptables -t filter -A wlan0_Internet -o eth0 -p tcp --tcp-flags SYN,RST SYN -j TCPMSS --clamp-mss-to-pmtu
+iptables -t filter -A wlan0_Internet -j wlan0_AuthServers
+iptables -t filter -A wlan0_AuthServers -d 192.168.24.1 -j ACCEPT
+iptables -t filter -A wlan0_Internet -j wlan0_Global
 
-update-rc.d dnsmasq defaults
-update-rc.d hostapd defaults
+echo "Allow unrestricted access to packets marked with 0x2
+iptables -t filter -A wlan0_Internet -m mark --mark 0x2 -j wlan0_Known
+iptables -t filter -A wlan0_Known -d 0.0.0.0/0 -j ACCEPT
+iptables -t filter -A wlan0_Internet -j wlan0_Unknown
 
-echo "----------------------Doing something to dhcpcd.sh----------------------"
+echo "Allow access to DNS and DHCP. This helps power users who have set their own DNS servers
+iptables -t filter -A wlan0_Unknown -d 0.0.0.0/0 -p udp --dport 53 -j ACCEPT
+iptables -t filter -A wlan0_Unknown -d 0.0.0.0/0 -p tcp --dport 53 -j ACCEPT
+iptables -t filter -A wlan0_Unknown -d 0.0.0.0/0 -p udp --dport 67 -j ACCEPT
+iptables -t filter -A wlan0_Unknown -d 0.0.0.0/0 -p tcp --dport 67 -j ACCEPT
+iptables -t filter -A wlan0_Unknown -j REJECT --reject-with icmp-port-unreachable
 
-wget -q https://gist.githubusercontent.com/Lewiscowles1986/390d4d423a08c4663c0ada0adfe04cdb/raw/5b41bc95d1d483b48e119db64e0603eefaec57ff/dhcpcd.sh -O /usr/lib/dhcpcd5/dhcpcd
+echo "Save our iptables
+iptables-save > /etc/iptables/rules.v4
 
-echo "----------------------Permissions on dhcpcd----------------------"
+echo "Make the HTML Document Root
+mkdir /usr/share/nginx/html/portal
+chown nginx:www-data /usr/share/nginx/html/portal
+chmod 755 /usr/share/nginx/html/portal
 
-chmod +x /usr/lib/dhcpcd5/dhcpcd
+echo "----------------------Copying hotspot.conf
+wget -q https://raw.githubusercontent.com/tretos53/Captive-Portal/master/nginx -O /etc/nginx/sites-available/hotspot.conf
 
-echo "----------------------All done! Please reboot----------------------"
+
+echo "Enable the website and reload nginx
+ln -s /etc/nginx/sites-available/hotspot.conf /etc/nginx/sites-enabled/hotspot.conf
+systemctl reload nginx
