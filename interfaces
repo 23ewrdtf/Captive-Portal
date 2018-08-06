@@ -1,11 +1,8 @@
-# The loopback network interface
-auto lo eth0
-iface lo inet loopback
-
-# The "lan" network interface
-iface eth0 inet dhcp
-
-# The "wifi" network interface
+allow-hotplug wlan0
 iface wlan0 inet static
-address 192.168.24.1
-netmask 255.255.255.0
+	address 192.168.24.1
+	netmask 255.255.255.0
+  
+auto eth0
+	allow-hotplug eth0
+	iface eth0 inet dhcp
