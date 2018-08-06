@@ -27,7 +27,6 @@ fi
 # echo "----------------------Upgrading packages, this might take a while----------------------"
 # apt-get upgrade -yqq
 
-
 echo "----------------------Installing iptables-persistent"
 apt-get install iptables-persistent -yqq
 
@@ -60,13 +59,13 @@ sed -i -- 's/#DAEMON_CONF=""/DAEMON_CONF="\/etc\/hostapd\/hostapd.conf"/g' /etc/
 
 echo "----------------------Configuring IP Tables
 
-echo "Flush all connections in the firewall
+echo "----------------------Flushing all connections in the firewall
 iptables -F
 
-echo "Delete all chains in iptables
+echo "----------------------Deleting all chains in iptables
 iptables -X
 
-echo "Setting up rules
+echo "----------------------Setting up rules
 iptables -t mangle -N wlan0_Trusted
 iptables -t mangle -N wlan0_Outgoing
 iptables -t mangle -N wlan0_Incoming
@@ -90,7 +89,7 @@ iptables -t nat -A wlan0_Unknown -j wlan0_AuthServers
 iptables -t nat -A wlan0_Unknown -j wlan0_Global
 iptables -t nat -A wlan0_Unknown -j wlan0_temp
 
-echo "Forward new requests to this destination
+echo "----------------------Forwarding new requests to this destination
 iptables -t nat -A wlan0_Unknown -p tcp --dport 80 -j DNAT --to-destination 192.168.24.1
 iptables -t filter -N wlan0_Internet
 iptables -t filter -N wlan0_AuthServers
@@ -105,22 +104,22 @@ iptables -t filter -A wlan0_Internet -j wlan0_AuthServers
 iptables -t filter -A wlan0_AuthServers -d 192.168.24.1 -j ACCEPT
 iptables -t filter -A wlan0_Internet -j wlan0_Global
 
-echo "Allow unrestricted access to packets marked with 0x2
+echo "----------------------Allowing unrestricted access to packets marked with 0x2
 iptables -t filter -A wlan0_Internet -m mark --mark 0x2 -j wlan0_Known
 iptables -t filter -A wlan0_Known -d 0.0.0.0/0 -j ACCEPT
 iptables -t filter -A wlan0_Internet -j wlan0_Unknown
 
-echo "Allow access to DNS and DHCP. This helps power users who have set their own DNS servers
+echo "----------------------Allowing access to DNS and DHCP. This helps power users who have set their own DNS servers
 iptables -t filter -A wlan0_Unknown -d 0.0.0.0/0 -p udp --dport 53 -j ACCEPT
 iptables -t filter -A wlan0_Unknown -d 0.0.0.0/0 -p tcp --dport 53 -j ACCEPT
 iptables -t filter -A wlan0_Unknown -d 0.0.0.0/0 -p udp --dport 67 -j ACCEPT
 iptables -t filter -A wlan0_Unknown -d 0.0.0.0/0 -p tcp --dport 67 -j ACCEPT
 iptables -t filter -A wlan0_Unknown -j REJECT --reject-with icmp-port-unreachable
 
-echo "Save our iptables
+echo "----------------------Saving iptables
 iptables-save > /etc/iptables/rules.v4
 
-echo "Make the HTML Document Root
+echo "----------------------Making the HTML Document Root
 mkdir /usr/share/nginx/html/portal
 chown nginx:www-data /usr/share/nginx/html/portal
 chmod 755 /usr/share/nginx/html/portal
@@ -129,6 +128,8 @@ echo "----------------------Copying hotspot.conf
 wget -q https://raw.githubusercontent.com/tretos53/Captive-Portal/master/nginx -O /etc/nginx/sites-available/hotspot.conf
 
 
-echo "Enable the website and reload nginx
+echo "----------------------Enabling the website and reload nginx
 ln -s /etc/nginx/sites-available/hotspot.conf /etc/nginx/sites-enabled/hotspot.conf
 systemctl reload nginx
+
+echo "----------------------Done, please reboot.
