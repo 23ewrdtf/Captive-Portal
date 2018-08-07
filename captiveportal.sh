@@ -59,6 +59,11 @@ echo "└───────────────────────�
 read -p "Press enter to continue"
 
 echo "┌──────────────────┐"
+echo "|Configuring wlan0 |"
+echo "└──────────────────┘"
+wget -q https://raw.githubusercontent.com/tretos53/Captive-Portal/master/interfaces -O /etc/network/interfaces
+
+echo "┌──────────────────┐"
 echo "|Installing dnsmasq|"
 echo "└──────────────────┘"
 apt-get install dnsmasq -yqq	
@@ -144,10 +149,7 @@ echo "|Copying hosts file|"
 echo "└──────────────────┘"
 wget -q https://raw.githubusercontent.com/tretos53/Captive-Portal/master/hosts -O /etc/hosts
 
-echo "┌───────────────────────┐"
-echo "|Copying interfaces file|"
-echo "└───────────────────────┘"
-wget -q https://raw.githubusercontent.com/tretos53/Captive-Portal/master/interfaces -O /etc/network/interfaces
+
 
 echo "┌───────────────────┐"
 echo "|Copying resolv.conf|"
