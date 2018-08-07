@@ -23,6 +23,55 @@ fi
 
 
 
+echo "┌────────────────┐"
+echo "|Installing nginx|"
+echo "└────────────────┘"
+apt-get install nginx -yqq
+
+echo "┌──────────────────────────────┐"
+echo "|Making the HTML Document Root.|"
+echo "└──────────────────────────────┘"
+mkdir /usr/share/nginx/html/portal
+useradd nginx
+chown nginx:www-data /usr/share/nginx/html/portal
+chmod 755 /usr/share/nginx/html/portal
+
+echo "┌────────────────────┐"
+echo "|Copying hotspot.conf|"
+echo "└────────────────────┘"
+wget -q https://raw.githubusercontent.com/tretos53/Captive-Portal/master/nginx -O /etc/nginx/sites-available/hotspot.conf
+
+echo "┌──────────────────┐"
+echo "|Copying index.html|"
+echo "└──────────────────┘"
+wget -q https://raw.githubusercontent.com/tretos53/Captive-Portal/master/index.html -O /usr/share/nginx/html/portal/index.html
+
+echo "┌────────────────────────────────────────┐"
+echo "|Enabling the website and reloading nginx|"
+echo "└────────────────────────────────────────┘"
+ln -s /etc/nginx/sites-available/hotspot.conf /etc/nginx/sites-enabled/hotspot.conf
+systemctl reload nginx
+
+echo "┌─────────────────────────────────────────────────────────────────────────────────────────────────┐"
+echo "|Conect to your pi (the same IP as you are connecting to it now via web browser.			|
+echo "|You should be able to see the nginx default website.						|
+echo "|If you do, press any key to continue. If you don't, start again or contact your IT Administrator	|"
+echo "└─────────────────────────────────────────────────────────────────────────────────────────────────┘"
+read -p "Press enter to continue"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 echo "┌──────────────────┐"
 echo "|Installing dnsmasq|"
@@ -35,7 +84,7 @@ echo "└────────────────────┘"
 wget -q https://raw.githubusercontent.com/tretos53/Captive-Portal/master/dnsmasq.conf -O /etc/dnsmasq.conf
 
 echo "┌─────────────────────────────────────────┐"
-echo "|configuring dnsmasq to start at boot|"
+echo "|configuring dnsmasq to start at boot	|"
 echo "└─────────────────────────────────────────┘"
 update-rc.d dnsmasq defaults
 
@@ -70,13 +119,13 @@ echo "|Copying hostapd.conf|"
 echo "└────────────────────┘"
 wget -q https://raw.githubusercontent.com/tretos53/Captive-Portal/master/hostapd.conf -O /etc/hostapd/hostapd.conf
 
-echo "┌────────────────────────────────┐"
-echo "|load that config file by default|"
-echo "└────────────────────────────────┘"
+echo "┌───────────────────┐"
+echo "|configuring hostapd|"
+echo "└───────────────────┘"
 sed -i -- 's/#DAEMON_CONF=""/DAEMON_CONF="\/etc\/hostapd\/hostapd.conf"/g' /etc/default/hostapd
 
 echo "┌─────────────────────────────────────────┐"
-echo "|configuring hostapd to start at boot|"
+echo "|configuring hostapd to start at boot	|"
 echo "└─────────────────────────────────────────┘"
 update-rc.d hostapd defaults
 
@@ -89,33 +138,6 @@ update-rc.d hostapd defaults
 	
 	
 	
-echo "┌────────────────┐"
-echo "|Installing nginx|"
-echo "└────────────────┘"
-apt-get install nginx -yqq
-
-echo "┌──────────────────────────────┐"
-echo "|Making the HTML Document Root.|"
-echo "└──────────────────────────────┘"
-mkdir /usr/share/nginx/html/portal
-useradd nginx
-chown nginx:www-data /usr/share/nginx/html/portal
-chmod 755 /usr/share/nginx/html/portal
-
-echo "┌────────────────────┐"
-echo "|Copying hotspot.conf|"
-echo "└────────────────────┘"
-wget -q https://raw.githubusercontent.com/tretos53/Captive-Portal/master/nginx -O /etc/nginx/sites-available/hotspot.conf
-
-echo "┌──────────────────┐"
-echo "|Copying index.html|"
-echo "└──────────────────┘"
-wget -q https://raw.githubusercontent.com/tretos53/Captive-Portal/master/index.html -O /usr/share/nginx/html/portal/index.html
-
-echo "┌─────────────────────────────────────┐"
-echo "|Enabling the website and reload nginx|"
-echo "└─────────────────────────────────────┘"
-ln -s /etc/nginx/sites-available/hotspot.conf /etc/nginx/sites-enabled/hotspot.conf
 
 
 
