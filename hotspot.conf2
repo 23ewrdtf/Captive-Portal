@@ -1,10 +1,3 @@
-# Make the HTML Document Root
-mkdir /usr/share/nginx/html/portal
-chown nginx:www-data /usr/share/nginx/html/portal
-chmod 755 /usr/share/nginx/html/portal
-
-# create the nginx hotspot.conf file
-cat << EOF > /etc/nginx/sites-available/hotspot.conf
 server {
     # Listening on IP Address.
     # This is the website iptables redirects to
@@ -50,9 +43,3 @@ server {
     	fastcgi_pass php;
     }
 }
-
-EOF
-
-# Enable the website and reload nginx
-ln -s /etc/nginx/sites-available/hotspot.conf /etc/nginx/sites-enabled/hotspot.conf
-systemctl reload nginx
