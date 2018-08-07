@@ -21,10 +21,6 @@ fi
 # echo "└───────────────────────────────────────────┘"
 # apt-get upgrade -yqq
 
-
-
-
-
 echo "┌────────────────┐"
 echo "|Installing nginx|"
 echo "└────────────────┘"
@@ -48,40 +44,32 @@ echo "|Copying index.html|"
 echo "└──────────────────┘"
 wget -q https://raw.githubusercontent.com/tretos53/Captive-Portal/master/index.html -O /usr/share/nginx/html/portal/index.html
 
-echo "┌────────────────────────────────────────┐"
-echo "|Enabling the website and reloading nginx|"
-echo "└────────────────────────────────────────┘"
+echo "┌─────────────────────────────────────┐"
+echo "|Enabling the website and reload nginx|"
+echo "└─────────────────────────────────────┘"
 ln -s /etc/nginx/sites-available/hotspot.conf /etc/nginx/sites-enabled/hotspot.conf
 systemctl reload nginx
 
-echo "┌─────────────────────────────────────────────────────────────────────────────────────────────────┐"
-echo "|Conect to your pi (the same IP as you are connecting to it now) via web browser.			|
-echo "|You should be able to see the nginx default website.						|
-echo "|If you do, press any key to continue. If you don't, start again or contact your IT Administrator	|"
-echo "└─────────────────────────────────────────────────────────────────────────────────────────────────┘"
+echo "┌─────────────────────────────────────────────────────────────────────────────────┐"
+echo "|Connect to your pi via webbrowser on the same IP you are connecting to it now.	|"
+echo "|You should be able to see the nginx default website.				|"
+echo "|If you do, press any key to continue.						|"
+echo "|If you don't, start again or contact your IT Administrator.			|"
+echo "└─────────────────────────────────────────────────────────────────────────────────┘"
 read -p "Press enter to continue"
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 echo "┌──────────────────┐"
 echo "|Installing dnsmasq|"
 echo "└──────────────────┘"
 apt-get install dnsmasq -yqq	
 
+echo "┌──────────────────┐"
+echo "|Installing hostapd|"
+echo "└──────────────────┘"
+apt-get install hostapd -yqq
+
 echo "┌────────────────────┐"
-echo "|Copying dnsmasq.conf|"
+echo "|Configuring dnsmasq |"
 echo "└────────────────────┘"
 wget -q https://raw.githubusercontent.com/tretos53/Captive-Portal/master/dnsmasq.conf -O /etc/dnsmasq.conf
 
@@ -90,40 +78,10 @@ echo "|configuring dnsmasq to start at boot	|"
 echo "└─────────────────────────────────────────┘"
 update-rc.d dnsmasq defaults
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-echo "┌──────────────────┐"
-echo "|Installing hostapd|"
-echo "└──────────────────┘"
-apt-get install hostapd -yqq
-
 echo "┌────────────────────┐"
-echo "|Copying hostapd.conf|"
+echo "|Configuring hostapd |"
 echo "└────────────────────┘"
 wget -q https://raw.githubusercontent.com/tretos53/Captive-Portal/master/hostapd.conf -O /etc/hostapd/hostapd.conf
-
-echo "┌───────────────────┐"
-echo "|configuring hostapd|"
-echo "└───────────────────┘"
 sed -i -- 's/#DAEMON_CONF=""/DAEMON_CONF="\/etc\/hostapd\/hostapd.conf"/g' /etc/default/hostapd
 
 echo "┌─────────────────────────────────────────┐"
@@ -131,7 +89,7 @@ echo "|configuring hostapd to start at boot	|"
 echo "└─────────────────────────────────────────┘"
 update-rc.d hostapd defaults
 
-	
+Reboot and test	
 	
 	
 	
