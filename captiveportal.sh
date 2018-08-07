@@ -147,7 +147,7 @@ wget -q https://raw.githubusercontent.com/tretos53/Captive-Portal/master/hosts -
 echo "┌───────────────────────┐"
 echo "|Copying interfaces file|"
 echo "└───────────────────────┘"
-wget -q https://github.com/tretos53/Captive-Portal/blob/master/interfaces -O /etc/network/interfaces
+wget -q https://raw.githubusercontent.com/tretos53/Captive-Portal/master/interfaces -O /etc/network/interfaces
 
 echo "┌───────────────────┐"
 echo "|Copying resolv.conf|"
