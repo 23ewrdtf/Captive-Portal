@@ -19,6 +19,120 @@ fi
 # echo "└───────────────────────────────────────────┘"
 # apt-get upgrade -yqq
 
+
+
+
+
+
+echo "┌──────────────────┐"
+echo "|Installing dnsmasq|"
+echo "└──────────────────┘"
+apt-get install dnsmasq -yqq	
+
+echo "┌────────────────────┐"
+echo "|Copying dnsmasq.conf|"
+echo "└────────────────────┘"
+wget -q https://raw.githubusercontent.com/tretos53/Captive-Portal/master/dnsmasq.conf -O /etc/dnsmasq.conf
+
+echo "┌─────────────────────────────────────────┐"
+echo "|configuring dnsmasq to start at boot|"
+echo "└─────────────────────────────────────────┘"
+update-rc.d dnsmasq defaults
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+echo "┌──────────────────┐"
+echo "|Installing hostapd|"
+echo "└──────────────────┘"
+apt-get install hostapd -yqq
+
+echo "┌────────────────────┐"
+echo "|Copying hostapd.conf|"
+echo "└────────────────────┘"
+wget -q https://raw.githubusercontent.com/tretos53/Captive-Portal/master/hostapd.conf -O /etc/hostapd/hostapd.conf
+
+echo "┌────────────────────────────────┐"
+echo "|load that config file by default|"
+echo "└────────────────────────────────┘"
+sed -i -- 's/#DAEMON_CONF=""/DAEMON_CONF="\/etc\/hostapd\/hostapd.conf"/g' /etc/default/hostapd
+
+echo "┌─────────────────────────────────────────┐"
+echo "|configuring hostapd to start at boot|"
+echo "└─────────────────────────────────────────┘"
+update-rc.d hostapd defaults
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+echo "┌────────────────┐"
+echo "|Installing nginx|"
+echo "└────────────────┘"
+apt-get install nginx -yqq
+
+echo "┌──────────────────────────────┐"
+echo "|Making the HTML Document Root.|"
+echo "└──────────────────────────────┘"
+mkdir /usr/share/nginx/html/portal
+useradd nginx
+chown nginx:www-data /usr/share/nginx/html/portal
+chmod 755 /usr/share/nginx/html/portal
+
+echo "┌────────────────────┐"
+echo "|Copying hotspot.conf|"
+echo "└────────────────────┘"
+wget -q https://raw.githubusercontent.com/tretos53/Captive-Portal/master/nginx -O /etc/nginx/sites-available/hotspot.conf
+
+echo "┌──────────────────┐"
+echo "|Copying index.html|"
+echo "└──────────────────┘"
+wget -q https://raw.githubusercontent.com/tretos53/Captive-Portal/master/index.html -O /usr/share/nginx/html/portal/index.html
+
+echo "┌─────────────────────────────────────┐"
+echo "|Enabling the website and reload nginx|"
+echo "└─────────────────────────────────────┘"
+ln -s /etc/nginx/sites-available/hotspot.conf /etc/nginx/sites-enabled/hotspot.conf
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 echo "┌──────────────────────────────┐"
 echo "|Installing iptables-persistent|"
 echo "└──────────────────────────────┘"
@@ -29,25 +143,19 @@ echo "|Installing conntrack|"
 echo "└────────────────────┘"
 apt-get install conntrack -yqq
 
-echo "┌──────────────────┐"
-echo "|Installing dnsmasq|"
-echo "└──────────────────┘"
-apt-get install dnsmasq -yqq
 
-echo "┌────────────────┐"
-echo "|Installing nginx|"
-echo "└────────────────┘"
-apt-get install nginx -yqq
 
-echo "┌──────────────────┐"
-echo "|Installing hostapd|"
-echo "└──────────────────┘"
-apt-get install hostapd -yqq
 
-echo "┌────────────────────┐"
-echo "|Copying dnsmasq.conf|"
-echo "└────────────────────┘"
-wget -q https://raw.githubusercontent.com/tretos53/Captive-Portal/master/dnsmasq.conf -O /etc/dnsmasq.conf
+
+
+
+
+
+
+
+
+
+
 
 echo "┌──────────────────┐"
 echo "|Copying hosts file|"
@@ -59,15 +167,51 @@ echo "|Copying interfaces file|"
 echo "└───────────────────────┘"
 wget -q https://github.com/tretos53/Captive-Portal/blob/master/interfaces -O /etc/network/interfaces
 
-echo "┌────────────────────┐"
-echo "|Copying hostapd.conf|"
-echo "└────────────────────┘"
-wget -q https://raw.githubusercontent.com/tretos53/Captive-Portal/master/hostapd.conf -O /etc/hostapd/hostapd.conf
+echo "┌───────────────────┐"
+echo "|Copying resolv.conf|"
+echo "└───────────────────┘"
+wget -q https://raw.githubusercontent.com/tretos53/Captive-Portal/master/resolv.conf -O /run/dnsmasq/resolv.conf
 
-echo "┌──────────────────┐"
-echo "|Configuring DAEMON|"
-echo "└──────────────────┘"
-sed -i -- 's/#DAEMON_CONF=""/DAEMON_CONF="\/etc\/hostapd\/hostapd.conf"/g' /etc/default/hostapd
+
+
+
+
+
+echo "----------------------Doing something to dhcpcd.sh----------------------"
+wget -q https://gist.githubusercontent.com/Lewiscowles1986/390d4d423a08c4663c0ada0adfe04cdb/raw/5b41bc95d1d483b48e119db64e0603eefaec57ff/dhcpcd.sh -O /usr/lib/dhcpcd5/dhcpcd
+
+echo "----------------------Permissions on dhcpcd----------------------"
+chmod +x /usr/lib/dhcpcd5/dhcpcd
+
+
+
+
+Reboot
+
+
+
+
+
+
+
+
+
+
+
+
+
+echo "┌───────────────────┐"
+echo "|Installing lighttpd|"
+echo "└───────────────────┘"
+apt-get install lighttpd -yqq
+
+
+																			   
+
+
+
+
+
 
 echo "┌─────────────────────┐"
 echo "|Configuring IP Tables|"
@@ -147,29 +291,7 @@ echo "|Saving iptables.|"
 echo "└────────────────┘"
 iptables-save > /etc/iptables/rules.v4
 
-echo "┌──────────────────────────────┐"
-echo "|Making the HTML Document Root.|"
-echo "└──────────────────────────────┘"
-mkdir /usr/share/nginx/html/portal
-useradd nginx
-chown nginx:www-data /usr/share/nginx/html/portal
-chmod 755 /usr/share/nginx/html/portal
 
-echo "┌────────────────────┐"
-echo "|Copying hotspot.conf|"
-echo "└────────────────────┘"
-wget -q https://raw.githubusercontent.com/tretos53/Captive-Portal/master/nginx -O /etc/nginx/sites-available/hotspot.conf
-
-echo "┌──────────────────┐"
-echo "|Copying index.html|"
-echo "└──────────────────┘"
-wget -q https://raw.githubusercontent.com/tretos53/Captive-Portal/master/index.html -O /usr/share/nginx/html/portal/index.html
-
-echo "┌─────────────────────────────────────┐"
-echo "|Enabling the website and reload nginx|"
-echo "└─────────────────────────────────────┘"
-ln -s /etc/nginx/sites-available/hotspot.conf /etc/nginx/sites-enabled/hotspot.conf
-systemctl reload nginx
 
 echo "┌───────────────────────────────────┐"
 echo "|Done, connect to the wifi and test.|"
