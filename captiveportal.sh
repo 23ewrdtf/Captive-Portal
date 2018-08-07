@@ -21,6 +21,42 @@ fi
 # echo "└───────────────────────────────────────────┘"
 # apt-get upgrade -yqq
 
+echo "┌──────────────────┐"
+echo "|Installing dnsmasq|"
+echo "└──────────────────┘"
+apt-get install dnsmasq -yqq
+
+echo "┌──────────────────┐"
+echo "|Configuring wlan0 |"
+echo "└──────────────────┘"
+wget -q https://raw.githubusercontent.com/tretos53/Captive-Portal/master/dhcpcd.conf -O /etc/dhcpcd.conf
+
+echo "┌────────────────────┐"
+echo "|Configuring dnsmasq |"
+echo "└────────────────────┘"
+wget -q https://raw.githubusercontent.com/tretos53/Captive-Portal/master/dnsmasq.conf -O /etc/dnsmasq.conf
+
+echo "┌─────────────────────────────────────────┐"
+echo "|configuring dnsmasq to start at boot	|"
+echo "└─────────────────────────────────────────┘"
+update-rc.d dnsmasq defaults
+
+echo "┌──────────────────┐"
+echo "|Installing hostapd|"
+echo "└──────────────────┘"
+apt-get install hostapd -yqq
+
+echo "┌────────────────────┐"
+echo "|Configuring hostapd |"
+echo "└────────────────────┘"
+wget -q https://raw.githubusercontent.com/tretos53/Captive-Portal/master/hostapd.conf -O /etc/hostapd/hostapd.conf
+sed -i -- 's/#DAEMON_CONF=""/DAEMON_CONF="\/etc\/hostapd\/hostapd.conf"/g' /etc/default/hostapd
+
+echo "┌─────────────────────────────────────────┐"
+echo "|configuring hostapd to start at boot	|"
+echo "└─────────────────────────────────────────┘"
+update-rc.d hostapd defaults
+
 echo "┌────────────────┐"
 echo "|Installing nginx|"
 echo "└────────────────┘"
@@ -37,7 +73,7 @@ chmod 755 /usr/share/nginx/html/portal
 echo "┌────────────────────┐"
 echo "|Copying hotspot.conf|"
 echo "└────────────────────┘"
-wget -q https://raw.githubusercontent.com/tretos53/Captive-Portal/master/nginx -O /etc/nginx/sites-available/hotspot.conf
+wget -q https://raw.githubusercontent.com/tretos53/Captive-Portal/master/hotspot.conf -O /etc/nginx/sites-available/hotspot.conf
 
 echo "┌──────────────────┐"
 echo "|Copying index.html|"
@@ -48,53 +84,17 @@ echo "┌───────────────────────�
 echo "|Enabling the website and reload nginx|"
 echo "└─────────────────────────────────────┘"
 ln -s /etc/nginx/sites-available/hotspot.conf /etc/nginx/sites-enabled/hotspot.conf
-systemctl reload nginx
+unlink /etc/nginx/sites-enabled/default
 
-echo "┌─────────────────────────────────────────────────────────────────────────────────┐"
-echo "|Connect to your pi via webbrowser on the same IP you are connecting to it now.	|"
-echo "|You should be able to see the nginx default website.				|"
-echo "|If you do, press any key to continue.						|"
-echo "|If you don't, start again or contact your IT Administrator.			|"
-echo "└─────────────────────────────────────────────────────────────────────────────────┘"
-read -p "Press enter to continue"
+echo "┌─────────────────┐"
+echo "|All done, reboot.|"
+echo "└─────────────────┘"
 
-echo "┌──────────────────┐"
-echo "|Configuring wlan0 |"
-echo "└──────────────────┘"
-wget -q https://raw.githubusercontent.com/tretos53/Captive-Portal/master/interfaces -O /etc/network/interfaces
 
-echo "┌──────────────────┐"
-echo "|Installing dnsmasq|"
-echo "└──────────────────┘"
-apt-get install dnsmasq -yqq	
 
-echo "┌──────────────────┐"
-echo "|Installing hostapd|"
-echo "└──────────────────┘"
-apt-get install hostapd -yqq
+	
 
-echo "┌────────────────────┐"
-echo "|Configuring dnsmasq |"
-echo "└────────────────────┘"
-wget -q https://raw.githubusercontent.com/tretos53/Captive-Portal/master/dnsmasq.conf -O /etc/dnsmasq.conf
 
-echo "┌─────────────────────────────────────────┐"
-echo "|configuring dnsmasq to start at boot	|"
-echo "└─────────────────────────────────────────┘"
-update-rc.d dnsmasq defaults
-
-echo "┌────────────────────┐"
-echo "|Configuring hostapd |"
-echo "└────────────────────┘"
-wget -q https://raw.githubusercontent.com/tretos53/Captive-Portal/master/hostapd.conf -O /etc/hostapd/hostapd.conf
-sed -i -- 's/#DAEMON_CONF=""/DAEMON_CONF="\/etc\/hostapd\/hostapd.conf"/g' /etc/default/hostapd
-
-echo "┌─────────────────────────────────────────┐"
-echo "|configuring hostapd to start at boot	|"
-echo "└─────────────────────────────────────────┘"
-update-rc.d hostapd defaults
-
-Reboot and test	
 	
 	
 	
