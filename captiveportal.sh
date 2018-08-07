@@ -53,7 +53,7 @@ ln -s /etc/nginx/sites-available/hotspot.conf /etc/nginx/sites-enabled/hotspot.c
 systemctl reload nginx
 
 echo "┌─────────────────────────────────────────────────────────────────────────────────────────────────┐"
-echo "|Conect to your pi (the same IP as you are connecting to it now via web browser.			|
+echo "|Conect to your pi (the same IP as you are connecting to it now) via web browser.			|
 echo "|You should be able to see the nginx default website.						|
 echo "|If you do, press any key to continue. If you don't, start again or contact your IT Administrator	|"
 echo "└─────────────────────────────────────────────────────────────────────────────────────────────────┘"
