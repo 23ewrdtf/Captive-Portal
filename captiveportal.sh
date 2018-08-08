@@ -77,6 +77,7 @@ echo "┌───────────────────────�
 echo "|All done, reboot and run below commands after reboot to start services.	|"
 echo "|Disconnect the Ethernet cable before connecting to WiFi!!!		|"
 echo "|Connect to wifi once done and test if redirect works			|"
+echo "|If sucessfull you should see a Redirect Worked message and PHP info page	|"
 echo "|service nginx stop							|"
 echo "|service nginx start							|"
 echo "|service hostapd stop							|"
