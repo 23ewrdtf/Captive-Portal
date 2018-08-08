@@ -78,7 +78,7 @@ wget -q https://raw.githubusercontent.com/tretos53/Captive-Portal/master/hotspot
 echo "┌──────────────────┐"
 echo "|Copying index.html|"
 echo "└──────────────────┘"
-wget -q https://raw.githubusercontent.com/tretos53/Captive-Portal/master/index.html -O /usr/share/nginx/html/portal/index.html
+wget -q https://raw.githubusercontent.com/tretos53/Captive-Portal/master/index.php -O /usr/share/nginx/html/portal/index.php
 
 echo "┌─────────────────────────────────────┐"
 echo "|Enabling the website and reload nginx|"
