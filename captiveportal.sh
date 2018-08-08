@@ -75,6 +75,7 @@ update-rc.d hostapd defaults
 
 echo "┌─────────────────────────────────────────────────────────────────────────┐"
 echo "|All done, reboot and run below commands after reboot to start services.	|"
+echo "|Disconnect the Ethernet cable before connecting to WiFi!!!		|"
 echo "|Connect to wifi once done and test if redirect works			|"
 echo "|service nginx stop							|"
 echo "|service nginx start							|"
