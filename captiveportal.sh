@@ -11,14 +11,14 @@ if [ "$EUID" -ne 0 ]
 	exit
 fi
 
-echo "┌───────────────────────────────────────────────────────────────────────────────────────────────────┐"
-echo "|This script might take a while so if you dont see much progress wait till you see all done message.|"
-echo "└───────────────────────────────────────────────────────────────────────────────────────────────────┘"
+#echo "┌───────────────────────────────────────────────────────────────────────────────────────────────────┐"
+#echo "|This script might take a while so if you dont see much progress wait till you see all done message.|"
+#echo "└───────────────────────────────────────────────────────────────────────────────────────────────────┘"
 
-echo "┌─────────────────────┐"
-echo "|Updating repositories|"
-echo "└─────────────────────┘"
-apt-get update -yqq
+#echo "┌─────────────────────┐"
+#echo "|Updating repositories|"
+#echo "└─────────────────────┘"
+#apt-get update -yqq
 
 # echo "┌───────────────────────────────────────────┐"
 # echo "|Upgrading packages, this might take a while|"
@@ -29,6 +29,7 @@ apt-get update -yqq
 #echo "|Installing PHP7|"
 #echo "└───────────────┘"
 #apt-get install php7.0-fpm
+# Stops at this point, why?
 
 echo "┌────────────────────────────────┐"
 echo "|Installing and configuring nginx|"
