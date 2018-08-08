@@ -83,4 +83,4 @@ echo "|service hostapd start							|"
 echo "|service dnsmasq stop							|"
 echo "|service dnsmasq start							|"
 echo "└─────────────────────────────────────────────────────────────────────────┘"
-apt-get install php7.0-fpm
+apt-get install php7.0-fpm -yqq
