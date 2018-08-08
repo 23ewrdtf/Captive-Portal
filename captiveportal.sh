@@ -25,10 +25,10 @@ apt-get update -yqq
 # echo "└───────────────────────────────────────────┘"
 # apt-get upgrade -yqq
 
-echo "┌───────────────┐"
-echo "|Installing PHP7|"
-echo "└───────────────┘"
-apt-get install php7.0-fpm
+#echo "┌───────────────┐"
+#echo "|Installing PHP7|"
+#echo "└───────────────┘"
+#apt-get install php7.0-fpm
 
 echo "┌────────────────────────────────┐"
 echo "|Installing and configuring nginx|"
