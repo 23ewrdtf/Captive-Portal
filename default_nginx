@@ -3,15 +3,27 @@ server {
 #       server_name  hotspot.localnet;
         root /var/www/html;
 
-        # For iOS
-        if ($http_user_agent ~* (CaptiveNetworkSupport) ) {
-        return 302 http://192.168.24.1/index2.php;
+
+        # Redirect requests for /generate_204 to open the captive portal screen
+        location /generate_204 {
+                return 302 http://hotspot.localnet/index.php;
         }
 
-        # For others
+        # Redirect requests for files that don't exist to the download page
         location / {
-        return 302 http://192.168.24.1/index.php;
+                try_files $uri $uri/ /index.php;
         }
+
+
+#       # For iOS
+#       if ($http_user_agent ~* (CaptiveNetworkSupport) ) {
+#        return 302 http://192.168.24.1/index2.php;
+#       }
+#
+#       # For others
+#       location / {
+#        return 302 http://192.168.24.1/index.php;
+#       }
 
         index index.php index.html index.htm;
 
