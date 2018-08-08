@@ -70,6 +70,8 @@ update-rc.d hostapd defaults
 
 echo "┌─────────────────────────────────────────────────────────────────────────┐"
 echo "|Installing PHP7								|"
+echo "└─────────────────────────────────────────────────────────────────────────┘"
+echo "┌─────────────────────────────────────────────────────────────────────────┐"
 echo "|Once PHP is installed, reboot and run below commands after the reboot	|"
 echo "|Disconnect the Ethernet cable before connecting to WiFi!!!		|"
 echo "|Connect to wifi once done and test if redirect works			|"
