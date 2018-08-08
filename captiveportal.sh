@@ -11,6 +11,10 @@ if [ "$EUID" -ne 0 ]
 	exit
 fi
 
+echo "┌───────────────────────────────────────────────────────────────────────────────────────────────────┐"
+echo "|This script might take a while so if you dont see much progress wait till you see all done message.|"
+echo "└───────────────────────────────────────────────────────────────────────────────────────────────────┘"
+
 echo "┌─────────────────────┐"
 echo "|Updating repositories|"
 echo "└─────────────────────┘"
