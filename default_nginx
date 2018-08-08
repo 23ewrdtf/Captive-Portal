@@ -24,12 +24,12 @@ server {
 
     # For iOS
     if ($http_user_agent ~* (CaptiveNetworkSupport) ) {
-        return 302 http://http://192.168.0.22//index.php;
+        return 302 http://http://192.168.0.22/index.php;
     }
 
     # For others
     location / {
-        return 302 http://http://192.168.0.22//;
+        return 302 http://http://192.168.0.22/;
     }
  }
  
