@@ -74,6 +74,7 @@ echo "└───────────────────────�
 echo "┌─────────────────────────────────────────────────────────────────────────┐"
 echo "|Once PHP is installed, reboot and run below commands after the reboot	|"
 echo "|Disconnect the Ethernet cable before connecting to WiFi!!!		|"
+echo "|Disconnect the internet from laptop before connecting to wifi.		|"
 echo "|Connect to wifi once done and test if redirect works			|"
 echo "|If sucessfull you should see a Redirect Worked message and PHP info page	|"
 echo "|service nginx stop							|"
