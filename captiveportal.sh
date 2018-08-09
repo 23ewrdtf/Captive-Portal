@@ -11,9 +11,12 @@ if [ "$EUID" -ne 0 ]
 	exit
 fi
 
-echo "┌───────────────────────────────────────────────────────────────────────────────────────────────────┐"
-echo "|This script might take a while so if you dont see much progress wait till you see all done message.|"
-echo "└───────────────────────────────────────────────────────────────────────────────────────────────────┘"
+echo "┌─────────────────────────────────────────┐"
+echo "|This script might take a while,		|"
+echo "|so if you dont see much progress,	|"
+echo "|wait till you see all done message.	|"
+echo "└─────────────────────────────────────────┘"
+read -p "Press enter to continue"
 
 echo "┌─────────────────────┐"
 echo "|Updating repositories|"
@@ -68,10 +71,13 @@ echo "|configuring hostapd to start at boot	|"
 echo "└─────────────────────────────────────────┘"
 update-rc.d hostapd defaults
 
-echo "┌─────────────────────────────────────────────────────────────────────────┐"
-echo "|Installing PHP7								|"
-echo "└─────────────────────────────────────────────────────────────────────────┘"
-echo "┌─────────────────────────────┐"
-echo "|Once PHP is installed, reboot|"
-echo "└─────────────────────────────┘"
+echo "┌─────────────────────────────────┐"
+echo "|After the next step is complete,	|"
+echo "|please reboot your pi and test.	|"
+echo "└─────────────────────────────────┘"
+read -p "Press enter to install PHP"
+
+echo "┌───────────────┐"
+echo "|Installing PHP7|"
+echo "└───────────────┘"
 apt-get install php7.0-fpm -yqq
