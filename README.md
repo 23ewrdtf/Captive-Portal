@@ -1,8 +1,10 @@
-## Raspberry-Pie
+## Captive Portal on Rapsberry Pi
 
-### This will create an open wifi network and when you connect to it, it will automatically open the browser. No internet access.
+Below script will create an open wifi network and when you connect to it, it will automatically open the browser. Make sure you don't have the internet on your device you are connecting it from.
 
-Tested on without updating the system first 2018-06-27-raspbian-stretch.zip
+The script also installs php incase you need it.
+
+Tested on, without updating the system first, 2018-06-27-raspbian-stretch.zip
 
 Flash microsd card with etcher
 
@@ -11,10 +13,6 @@ Put an empty file called ssh with no extension onto the boot partition, this wil
 Connect Pi to the ethernet network and boot.
 
 Connect to the SSH and run below command. You can get the IP address from IP scanner.
-
-NOT TESTED
-
-https://gist.github.com/mpeven/e6a3d762737071bf54cf7c51c92fca43
 
 ```
 sudo -i
