@@ -1,29 +1,41 @@
 server {
         listen 80 default_server;
-#       server_name  hotspot.localnet;
+		server_name  hotspot.localnet;
         root /var/www/html;
 
+# Logs
+#       access_log /var/log/nginx/captive.access.log;
+#       error_log /var/log/nginx/captive.error.log warn;
 
-        # Redirect requests for /generate_204 to open the captive portal screen
+# Redirect requests for /generate_204 to open the captive portal screen
         location /generate_204 {
                 return 302 http://hotspot.localnet/index.php;
         }
 
-        # Redirect requests for files that don't exist to the download page
-        location / {
-                try_files $uri $uri/ /index.php;
+# Redirect requests for /blank.html to open the captive portal screen
+        location /blank.html {
+                return 302 http://hotspot.localnet/index.php;
         }
 
+# Redirect requests for connectivitycheck.gstatic.com to open the captive portal screen
+        location connectivitycheck.gstatic.com {
+                return 302 http://hotspot.localnet/index.php;
+        }
 
-#       # For iOS
-#       if ($http_user_agent ~* (CaptiveNetworkSupport) ) {
-#        return 302 http://192.168.24.1/index2.php;
-#       }
-#
-#       # For others
-#       location / {
-#        return 302 http://192.168.24.1/index.php;
-#       }
+# Redirect requests for /mobile/status.php to open the captive portal screen
+        location /mobile/status.php {
+                return 302 http://hotspot.localnet/index.php;
+        }
+
+# For iOS
+       if ($http_user_agent ~* (CaptiveNetworkSupport) ) {
+        return 302 http://hotspot.localnet/index.php;
+       }
+
+# For others
+       location / {
+        return 302 http://captive.com/index.php;
+       }
 
         index index.php index.html index.htm;
 
