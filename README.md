@@ -14,7 +14,7 @@ and a few other places.
 
 The script also installs php incase you need it.
 
-Tested on, without updating the system first, 2018-06-27-raspbian-stretch.zip
+Tested on, without updating the system first, 2018-11-13-raspbian-stretch-lite.zip
 
 Flash microsd card with etcher
 
@@ -32,7 +32,11 @@ sudo -i
 curl -H 'Cache-Control: no-cache' -sSL https://raw.githubusercontent.com/tretos53/Captive-Portal/master/captiveportal.sh | sudo bash $0
 ```
 
-If your device automatically didnt show the sign in page, you might want to edit /etc/nginx/sites-enabled/default and add some more logic. Basically the requirmeents for each device are different:
+If your device automatically didnt show the sign in page, you might want to edit /etc/nginx/sites-enabled/default and add some more logic. Basically the requirmeents for each device are different. 
+
+Hostnames of each below sites needs to be public IPs
+
+Those IPs needs to be NATed to the pi
 
 Found on the internet:
 
