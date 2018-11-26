@@ -61,6 +61,15 @@ wget -q https://raw.githubusercontent.com/tretos53/Captive-Portal/master/hostapd
 sed -i -- 's/#DAEMON_CONF=""/DAEMON_CONF="\/etc\/hostapd\/hostapd.conf"/g' /etc/default/hostapd
 
 echo "┌─────────────────────────────────────────"
+echo "|Configuring iptables"
+echo "└─────────────────────────────────────────"
+iptables -t nat -A PREROUTING -s 192.168.24.0/24 -p tcp --dport 80 -j DNAT --to-destination 192.168.24.                                                                 808
+iptables -t nat -A POSTROUTING -j MASQUERADE
+echo iptables-persistent iptables-persistent/autosave_v4 boolean true | sudo debconf-set-selections
+echo iptables-persistent iptables-persistent/autosave_v6 boolean true | sudo debconf-set-selections
+apt-get -y install iptables-persistent
+
+echo "┌─────────────────────────────────────────"
 echo "|configuring hostapd to start at boot"
 echo "└─────────────────────────────────────────"
 update-rc.d hostapd defaults
