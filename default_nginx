@@ -34,7 +34,7 @@ server {
 
 # For others
        location / {
-        return 302 http://captive.com/index.php;
+        return 302 http://hotspot.localnet/index.php;
        }
 
         index index.php index.html index.htm;
