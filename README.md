@@ -24,6 +24,16 @@ sudo -i
 curl -H 'Cache-Control: no-cache' -sSL https://raw.githubusercontent.com/tretos53/Captive-Portal/master/captiveportal.sh | sudo bash $0
 ```
 
+#### To Do
+
+Disable ssh access on wifi interface
+
+Change the default Website
+
+Test popup on Iphones and other devices
+
+
+
 If your device automatically didnt show the sign in page, you might want to edit /etc/nginx/sites-enabled/default and add some more logic. Basically the requirmeents for each device are different. 
 
 Hostnames of each below sites needs to be public IPs
