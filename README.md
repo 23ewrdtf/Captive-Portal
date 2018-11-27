@@ -36,9 +36,13 @@ Add wifi name to be configured from the command line
 
 #### Popup Logic
 
-Hostnames of each below sites needs to be public IPs
+Below sites needs to be resolvable to public IPs
+connectivitycheck.gstatic.com
+www.gstatic.com
+www.apple.com
+clients3.google.com
 
-Those IPs needs to be NATed to the pi
+Those IPs needs to be NATed to the pi so basically NAT everything from WiFi to the RPI
 
 Each device got it's own checks (to be updated)
 
