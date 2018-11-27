@@ -32,6 +32,7 @@ Change the default Website
 
 Test popup on Iphones and other devices
 
+Add wifi name to be configured from the command line
 
 #### Popup Logic
 
