@@ -40,3 +40,9 @@ Hostnames of each below sites needs to be public IPs
 Those IPs needs to be NATed to the pi
 
 Each device got it's own checks (to be updated)
+
+#### Troubleshooting
+
+Install and capture traffic using `tcpdump -i wlan0 -w filename.pcap`
+
+Check nginx logs
