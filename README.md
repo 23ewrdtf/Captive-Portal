@@ -52,11 +52,3 @@ Each device got it's own checks (to be updated)
 Install and capture traffic using `tcpdump -i wlan0 -w filename.pcap`
 
 Check nginx logs
-
-Run below script that contains only commands:
-
-`sudo -i`
-
-```
-curl -H 'Cache-Control: no-cache' -sSL https://raw.githubusercontent.com/tretos53/Captive-Portal/master/captiveportal_debug.sh | sudo bash $0
-```
