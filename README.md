@@ -30,7 +30,7 @@ Disable ssh access on wifi interface
 
 Change the default Website
 
-Test popup on Iphones and other devices
+Test popup on other devices
 
 Add wifi name to be configured from the command line
 
@@ -40,6 +40,7 @@ Below sites needs to be resolvable to public IPs
 connectivitycheck.gstatic.com
 www.gstatic.com
 www.apple.com
+captive.apple.com
 clients3.google.com
 
 Those IPs needs to be NATed to the pi so basically NAT everything from WiFi to the RPI
