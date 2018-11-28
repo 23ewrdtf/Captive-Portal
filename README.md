@@ -30,7 +30,7 @@ Disable ssh access on wifi interface
 
 Change the default Website
 
-Test popup on other devices. Already works on Samsung S4, S7, S9 and IPhone X
+Test popup on other devices. Already works on Samsung S4, S7, S9, IPhone X and Blackberry
 
 Add wifi name to be configured from the command line
 
