@@ -26,6 +26,8 @@ curl -H 'Cache-Control: no-cache' -sSL https://raw.githubusercontent.com/tretos5
 
 #### To Do
 
+Automatically set the location as new RPI hardware requires that before enabling wifi
+
 Disable ssh access on wifi interface
 
 Change the default Website
