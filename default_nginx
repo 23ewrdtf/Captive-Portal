@@ -36,7 +36,12 @@ server {
        location / {
         return 302 http://hotspot.localnet/index.php;
        }
-
+       
+# Exlude png and pdf from being redirected to index.php 
+	location ~ \.(?:pdf|png)$ {
+        return 302 http://hotspot.localnet$uri;
+	}
+	
         index index.php index.html index.htm;
 
         location ~ \.php$ {
