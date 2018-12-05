@@ -1,11 +1,21 @@
 server {
         listen 80 default_server;
-		server_name  hotspot.localnet;
+        server_name  hotspot.localnet;
         root /var/www/html;
 
 # Logs
 #       access_log /var/log/nginx/captive.access.log;
 #       error_log /var/log/nginx/captive.error.log warn;
+
+# Try images first, then index.php
+        location /images {
+         try_files $uri $uri/ /index.php;
+       }
+
+# Try pdf first, then index.php
+        location /pdf {
+         try_files $uri $uri/ /index.php;
+       }
 
 # Redirect requests for /generate_204 to open the captive portal screen
         location /generate_204 {
@@ -36,12 +46,7 @@ server {
        location / {
         return 302 http://hotspot.localnet/index.php;
        }
-       
-# Exlude png and pdf from being redirected to index.php 
-	location ~ \.(?:pdf|png)$ {
-        return 302 http://hotspot.localnet$uri;
-	}
-	
+
         index index.php index.html index.htm;
 
         location ~ \.php$ {
