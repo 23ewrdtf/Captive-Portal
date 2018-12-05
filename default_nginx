@@ -17,6 +17,11 @@ server {
          try_files $uri $uri/ /index.php;
        }
 
+# That also works, it will ignore pdf and png files from being redirected.
+#       location ~ \.(?:pdf|png)$ {
+#        try_files $uri =404;
+#       }
+
 # Redirect requests for /generate_204 to open the captive portal screen
         location /generate_204 {
                 return 302 http://hotspot.localnet/index.php;
