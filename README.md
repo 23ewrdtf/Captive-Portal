@@ -28,6 +28,8 @@ curl -H 'Cache-Control: no-cache' -sSL https://raw.githubusercontent.com/tretos5
 
 Automatically set the location as new RPI hardware requires that before enabling wifi
 
+Add a time limit for each client. Disconnect client after 10minutes.
+
 Disable ssh access on wifi interface
 
 Change the default Website
