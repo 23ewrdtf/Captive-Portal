@@ -38,6 +38,18 @@ Test popup on other devices. Already works on Samsung S4, S7, S9, IPhone X and B
 
 Add wifi name to be configured from the command line
 
+#### Tested
+
+Tested on most modern devices.
+
+Iphone X
+
+Samsung S4, S7, S9
+
+Windows 7, 10
+
+Nexus 5X (Lineage OS)
+
 #### Popup Logic
 
 Below sites needs to be resolvable to public IPs
