@@ -7,6 +7,7 @@ server {
 #       access_log /var/log/nginx/captive.access.log;
 #       error_log /var/log/nginx/captive.error.log warn;
 
+# Below config for images and pdfs make sure that PDFs and Images added to your index.php wont be redirected as long as they are in below folders.
 # Try images first, then index.php
         location /images {
          try_files $uri $uri/ /index.php;
