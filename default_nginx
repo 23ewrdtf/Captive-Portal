@@ -2,6 +2,9 @@ server {
         listen 80 default_server;
         server_name  hotspot.localnet;
         root /var/www/html;
+        
+        # Only allow GET, HEAD, POST https://www.tenable.com/plugins/nessus/43111
+        if ($request_method !~ ^(GET|HEAD|POST)$) { return 444; }
 
 # Logs
 #       access_log /var/log/nginx/captive.access.log;
