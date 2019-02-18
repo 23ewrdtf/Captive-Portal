@@ -30,8 +30,9 @@ add_header X-XSS-Protection "1; mode=block";
 # I need to change our application code so we can increase security by disabling 'unsafe-inline' 'unsafe-eval'
 # directives for css and js(if you have inline css or js, you will need to keep it too).
 # more: http://www.html5rocks.com/en/tutorials/security/content-security-policy/#inline-code-considered-harmful
-add_header Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://ssl.google-analytics.com https://assets.zendesk.com https://connect.facebook.net; img-src 'self' https://ssl.google-analytics.com https://s-static.ak.facebook.com https://assets.zendesk.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://assets.zendesk.com; font-src 'self' https://themes.googleusercontent.com; frame-src https://assets.zendesk.com https://www.facebook.com https://s-static.ak.facebook.com https://tautt.zendesk.com; object-src 'none'";
-
+# adds the csp headers in the response, so if your website has xss somewhere scripts cannot be loaded from any url
+# You can add safe URLs below your site might be using to fetch stuff, for example fonts so you wouldnt want to block them
+add_header Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' img-src 'self' style-src 'self' 'unsafe-inline' font-src 'self' frame-src object-src 'none'";
 
 server {
         listen 80 default_server;
