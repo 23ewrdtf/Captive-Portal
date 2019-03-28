@@ -72,7 +72,7 @@ apt-get -y install iptables-persistent
 echo "┌─────────────────────────────────────────"
 echo "|configuring hostapd to start at boot"
 echo "└─────────────────────────────────────────"
-update-rc.d hostapd defaults
+#update-rc.d hostapd defaults
 
 echo "┌─────────────────────────────────────────"
 echo "|After the next step is complete,"
@@ -83,4 +83,4 @@ read -p "Press enter to install PHP"
 echo "┌─────────────────────────────────────────"
 echo "|Installing PHP7"
 echo "└─────────────────────────────────────────"
-apt-get install php7.0-fpm -yqq
+#apt-get install php7.0-fpm -yqq
