@@ -32,7 +32,7 @@ add_header X-XSS-Protection "1; mode=block";
 # more: http://www.html5rocks.com/en/tutorials/security/content-security-policy/#inline-code-considered-harmful
 # adds the csp headers in the response, so if your website has xss somewhere scripts cannot be loaded from any url
 # You can add safe URLs below your site might be using to fetch stuff, for example fonts so you wouldnt want to block them
-add_header Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-eval' img-src 'self' style-src 'self' 'unsafe-inline' font-src 'self' frame-src object-src 'none'";
+add_header Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-eval'; img-src 'self'; style-src 'self' 'unsafe-inline' http://hotspot.localnet; font-src 'self' 'unsafe-inline' http://hotspot.localnet; frame-src http://hotspot.localnet; object-src 'none'";
 
 server {
         listen 80 default_server;
