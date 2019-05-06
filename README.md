@@ -1,6 +1,6 @@
 ## Captive Portal on Rapsberry Pi
 
-If I'm not on Gitter, send me a message via github.
+If I'm not on Gitter, use Issues for all questions.
 
 [![Join the chat at https://gitter.im/Captive-Portal/Lobby](https://badges.gitter.im/Captive-Portal/Lobby.svg)](https://gitter.im/Captive-Portal/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
