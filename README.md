@@ -10,6 +10,8 @@ The script also installs php incase you need it.
 
 Tested on, without updating the system first, 2018-11-13-raspbian-stretch-lite.zip
 
+## Instructions
+
 Flash microsd card with etcher
 
 Put an empty file called ssh with no extension onto the boot partition, this will enable ssh at first boot. No need for screen and keyboard.
