@@ -75,7 +75,7 @@ Check nginx logs
 
 #### Other
 
-Find out which MAC addresses connected to the portal by finding all MAC addresses from the logs
+Find out which MAC addresses connected to the portal by finding all MAC addresses from the logs. Meantime solution untill I specify proper logs.
 
 ```
 # Go to /var/logs/
