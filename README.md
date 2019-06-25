@@ -78,6 +78,8 @@ Check nginx logs
 Find out which MAC addresses connected to the portal by finding all MAC addresses from the logs. Meantime solution untill I specify proper logs.
 
 ```
+
+
 # Go to /var/logs/
 cd /var/logs/
 
@@ -86,4 +88,14 @@ find . -name '*.gz' -execdir gunzip '{}' \;
 
 # Find MAC addresses in all files and dont show duplicates and other stuff
 grep -hoiIs '[0-9A-F]\{2\}\(:[0-9A-F]\{2\}\)\{5\}' * | sort -u
-```
+
+
+NGINX logs
+# Go to /var/logs/
+cd /var/logs/nginx/
+
+# Find all unique IP addresses that connected to the website. This will show 192...
+grep -hoiIs -E '([0-9]{1,3}[\.]){3}[0-9]{1,3}' * | sort -u
+
+# Find all unique IP addresses that connected to the website. This will show more details, like what (kind of) device connected.
+grep -E '([0-9]{1,3}[\.]){3}[0-9]{1,3}' * | sort -u```
