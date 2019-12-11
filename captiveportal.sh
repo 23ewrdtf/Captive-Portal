@@ -76,13 +76,10 @@ systemctl unmask hostapd.service
 systemctl enable hostapd.service
 
 echo "┌─────────────────────────────────────────"
-echo "|After the next step is complete,"
-echo "|please reboot your pi and test."
-echo "└─────────────────────────────────────────"
-read -p "Press enter to install PHP"
-
-echo "┌─────────────────────────────────────────"
 echo "|Installing PHP7"
 echo "└─────────────────────────────────────────"
-apt-get install php7.3-fpm php7.3-mbstring php7.3-mysql php7.3-curl php7.3-gd php7.3-curl php7.3-zip php7.3-xml -yqq
+apt-get install php7.3-fpm php7.3-mbstring php7.3-mysql php7.3-curl php7.3-gd php7.3-curl php7.3-zip php7.3-xml -yqq > /dev/null
 
+echo "┌─────────────────────────────────────────"
+echo "|Please reboot your pi and test."
+echo "└─────────────────────────────────────────"
