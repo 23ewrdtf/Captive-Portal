@@ -1,5 +1,8 @@
 ## Changelog
 
+ - 01-03-2020
+   - Added option to specify SSID
+  
  - 11-12-2019
    - Updated displayed text
    - Silenced php logs.
