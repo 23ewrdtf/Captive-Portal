@@ -1,9 +1,5 @@
 ## Captive Portal on Rapsberry Pi
 
-If I'm not on Gitter, use Issues for all questions.
-
-[![Join the chat at https://gitter.im/Captive-Portal/Lobby](https://badges.gitter.im/Captive-Portal/Lobby.svg)](https://gitter.im/Captive-Portal/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-
 Below script will create an open wifi network and when you connect to it, it will automatically open the browser. Make sure you don't have the internet on your device you are connecting it from. This is originally desinged to only provide local website from the RPI.
 
  - Tested on, without updating the system first, 2019-09-26-raspbian-buster-lite.zip.
