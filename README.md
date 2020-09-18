@@ -43,17 +43,9 @@ Test popup on other devices. Already works on Samsung S4, S7, S9, IPhone X and B
 
 Add wifi name to be configured from the command line
 
-#### Tested
+#### Known Issues
 
-Tested on most modern devices.
-
-Iphone X
-
-Samsung S4, S7, S9
-
-Windows 7, 10
-
-Nexus 5X (Lineage OS)
+Huawei P40 (CDY-NX9A) is still having issues. 
 
 #### Popup Logic
 
