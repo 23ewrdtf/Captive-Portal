@@ -18,6 +18,7 @@ fi
 
 SSID=${1:-CaptivePortal01}
 MODE=${2:-default}
+LOCAL_IP="$(ip -o route get to 8.8.8.8 | sed -n 's/.*src \([0-9.]\+\).*/\1/p')"
 
 echo "┌─────────────────────────────────────────"
 echo "|This script might take a while,"
@@ -78,7 +79,7 @@ sed -i -- "s/CaptivePortal01/${SSID}/g" /etc/hostapd/hostapd.conf
 echo "┌─────────────────────────────────────────"
 echo "|Configuring iptables"
 echo "└─────────────────────────────────────────"
-iptables -t nat -A PREROUTING -s 192.168.24.0/24 -p tcp --dport 80 -j DNAT --to-destination 192.168.24.1:80
+iptables -t nat -A PREROUTING -s 192.168.24.0/24 -p tcp --dport 80 -j DNAT --to-destination ${LOCAL_IP}:80
 iptables -t nat -A POSTROUTING -j MASQUERADE
 echo iptables-persistent iptables-persistent/autosave_v4 boolean true | sudo debconf-set-selections
 echo iptables-persistent iptables-persistent/autosave_v6 boolean true | sudo debconf-set-selections
